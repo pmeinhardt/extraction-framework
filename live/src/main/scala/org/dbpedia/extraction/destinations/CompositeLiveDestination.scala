@@ -11,8 +11,8 @@ class CompositeLiveDestination(destinations: LiveDestination*) extends LiveDesti
 
   override def open() = destinations.foreach(_.open())
 
-  override def write(extractor: String, hash: String, graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad]) =
-    destinations.foreach(_.write(extractor, hash, graphAdd, graphRemove, graphUnmodified))
+  override def write(extractor: String, hash: String, graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad], timestamp: Long) =
+    destinations.foreach(_.write(extractor, hash, graphAdd, graphRemove, graphUnmodified, timestamp))
 
   override def close() = destinations.foreach(_.close())
 

@@ -19,7 +19,7 @@ class PublisherDiffDestination(pageID: Long, policies: Array[Policy] = null) ext
 
   def open() { }
 
-  def write(extractor: String, hash: String, graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad]) {
+  def write(extractor: String, hash: String, graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad], timestamp: Long) {
     for (quad <- graphAdd)
       added.add(formatter.render(quad))
 

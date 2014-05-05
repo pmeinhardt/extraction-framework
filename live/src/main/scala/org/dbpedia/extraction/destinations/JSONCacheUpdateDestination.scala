@@ -24,7 +24,7 @@ class JSONCacheUpdateDestination(cache: JSONCache) extends LiveDestination {
   def open {
   }
 
-  def write(extractor: String, hash: String, graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad]) {
+  def write(extractor: String, hash: String, graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad], timestamp: Long) {
 
     hashes += hash
     extractors += extractor

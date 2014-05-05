@@ -20,6 +20,7 @@ import scala.xml._
 import org.dbpedia.extraction.wikiparser.impl.WikiParserWrapper
 import org.dbpedia.extraction.wikiparser.impl.json.JsonWikiParser
 import org.dbpedia.extraction.live.extractor.LiveExtractor
+import org.ini4j.Options
 
 
 /**
@@ -33,6 +34,8 @@ import org.dbpedia.extraction.live.extractor.LiveExtractor
 
 object LiveExtractionConfigLoader
 {
+  private val options: Options = LiveOptions.options
+
   //    private var config : Config = null;
   private var extractors : List[Extractor[_]] = null;
   private var reloadOntologyAndMapping = true;
@@ -146,6 +149,10 @@ object LiveExtractionConfigLoader
         destList += new PublisherDiffDestination(wikiPage.id, policies)
         destList += new LoggerDestination(wikiPage.id, wikiPage.title.decoded) // Just to log extraction results
 
+        if (options.containsKey("destinations.revision.enable") && options.get("destinations.revision.enable").toBoolean) {
+          destList += new RevisionDestination(wikiPage.id, policies)
+        }
+
         val compositeDest: LiveDestination = new CompositeLiveDestination(destList.toSeq: _*) // holds all main destinations
 
         val extractorDiffDest = new JSONCacheExtractorDestination(liveCache, compositeDest) // filters triples to add/remove/leave
@@ -165,6 +172,9 @@ object LiveExtractionConfigLoader
         val context = new PageContext()
 
         extractorRestrictDest.open
+
+        // Get the wiki page modification timestamp
+        val timestamp = wikiPage.timestamp
 
         //Get triples from each extractor separately
         extractors.foreach(extractor => {
@@ -197,7 +207,7 @@ object LiveExtractionConfigLoader
                 Seq()
               }
             }
-          extractorRestrictDest.write(extractor.getClass().getName(), "", RequiredGraph, Seq(), Seq())
+          extractorRestrictDest.write(extractor.getClass().getName(), "", RequiredGraph, Seq(), Seq(), timestamp)
         });
 
         extractorRestrictDest.close

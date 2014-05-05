@@ -13,8 +13,8 @@ class LoggerDestination(pageID: Long, pageTitle: String) extends LiveDestination
   private var addedTriples = 0
   private var deletedTriples = 0
   private var unmodifiedTriples = 0
-  private var extractors = 0;
-  private var now = System.currentTimeMillis
+  private var extractors = 0
+  private val now = System.currentTimeMillis
 
   /**
    * Opens this destination. This method should only be called once during the lifetime
@@ -22,8 +22,7 @@ class LoggerDestination(pageID: Long, pageTitle: String) extends LiveDestination
    */
   def open() {}
 
-  override def write(extractor: String, hash: String, graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad]) {
-
+  override def write(extractor: String, hash: String, graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad], timestamp: Long) {
     extractors += 1
     addedTriples += graphAdd.length
     deletedTriples += graphRemove.length

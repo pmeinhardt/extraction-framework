@@ -16,7 +16,7 @@ class JSONCacheExtractorDestination(cache: JSONCache, pipe: LiveDestination) ext
 
   override def open = pipe.open()
 
-  override def write(extractor: String, hash: String, graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad]) {
+  override def write(extractor: String, hash: String, graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad], timestamp: Long) {
 
     val sb = new java.lang.StringBuilder
     val quads = Sorting.stableSort(graphAdd ++ graphUnmodified)
@@ -34,7 +34,7 @@ class JSONCacheExtractorDestination(cache: JSONCache, pipe: LiveDestination) ext
     val cachedHash = cache.getHashForExtractor(extractor) //get the cached md5sum
     if (!cachedHash.equals("") && cachedHash.equals(newHash)) {
       // everything is the same, pipe to unmodified
-      pipe.write(extractor, cachedHash, Seq(), graphRemove.toSet.toSeq, quads.toSet.toSeq)
+      pipe.write(extractor, cachedHash, Seq(), graphRemove.toSet.toSeq, quads.toSet.toSeq, timestamp)
       return
     }
 
@@ -44,7 +44,7 @@ class JSONCacheExtractorDestination(cache: JSONCache, pipe: LiveDestination) ext
     val toDelete = existing.filterNot(q => quads.contains(q)).toSet.toSeq
     val unmodified = quads.filter(q => existing.contains(q)).toSet.toSeq
 
-    pipe.write(extractor, newHash, toAdd, toDelete, unmodified)
+    pipe.write(extractor, newHash, toAdd, toDelete, unmodified, timestamp)
   }
 
   override def close = pipe.close()

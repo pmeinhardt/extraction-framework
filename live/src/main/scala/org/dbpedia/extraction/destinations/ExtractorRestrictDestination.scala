@@ -16,7 +16,7 @@ class ExtractorRestrictDestination(extractorSpecs: Map[String, ExtractorSpecific
   /**
    * Writes quads to all child destinations.
    */
-  def write(extractor: String, hash: String, graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad]) {
+  def write(extractor: String, hash: String, graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad], timestamp: Long) {
 
     var added = new ArrayBuffer[Quad]()
     var deleted = new ArrayBuffer[Quad]()
@@ -34,7 +34,7 @@ class ExtractorRestrictDestination(extractorSpecs: Map[String, ExtractorSpecific
 
     }
 
-    pipe.write(extractor, hash, added, deleted ++ graphRemove, unmodified ++ graphUnmodified)
+    pipe.write(extractor, hash, added, deleted ++ graphRemove, unmodified ++ graphUnmodified, timestamp)
   }
 
   override def close = pipe.close()
