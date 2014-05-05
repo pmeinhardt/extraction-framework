@@ -14,11 +14,11 @@ object DBpediaSQLQueries {
   }
 
   def getJSONCacheInsert: String = {
-    "INSERT INTO DBPEDIALIVE_CACHE (pageID, title, updated, timesUpdated, json, subjects, diff) VALUES ( ?, ? , now() , ? , ? , ? , ?  ) "
+    "INSERT INTO DBPEDIALIVE_CACHE (pageID, title, updated, timesUpdated, json, subjects, diff) VALUES (?, ?, ?, ?, ?, ?, ?) "
   }
 
   def getJSONCacheUpdate: String = {
-    "UPDATE DBPEDIALIVE_CACHE SET title = ?, updated = now(), timesUpdated = ?, json = ?, subjects = ?, diff = ? WHERE pageID = ? "
+    "UPDATE DBPEDIALIVE_CACHE SET title = ?, updated = ?, timesUpdated = ?, json = ?, subjects = ?, diff = ? WHERE pageID = ? "
   }
 
   def getJSONCacheDelete: String = {

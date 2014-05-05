@@ -1,5 +1,7 @@
 package org.dbpedia.extraction.destinations
 
+import java.util.Date
+
 /**
  * A destination for Live extraction.
  * The write function separates add, remove & unmodified quads
@@ -15,14 +17,14 @@ abstract class LiveDestination {
   /**
    * Writes quads to all child destinations.
    */
-  def write(graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad]): Unit = {
-    write("", "", graphAdd, graphRemove, graphUnmodified)
+  def write(graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad], timestamp: Date): Unit = {
+    write("", "", graphAdd, graphRemove, graphUnmodified, timestamp)
   }
 
   /**
    * Writes quads to all child destinations.
    */
-  def write(extractor: String, hash: String, graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad]): Unit
+  def write(extractor: String, hash: String, graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad], timestamp: Date): Unit
 
   /**
    * Closes this destination. This method should only be called once during the lifetime

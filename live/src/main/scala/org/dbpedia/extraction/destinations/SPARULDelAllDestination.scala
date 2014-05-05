@@ -5,7 +5,7 @@ import org.dbpedia.extraction.live.storage.JDBCUtil
 import scala.collection.JavaConversions._
 import scala.collection.Seq
 import org.apache.log4j.Logger
-import java.util.HashSet
+import java.util.{Date, HashSet}
 import org.dbpedia.extraction.destinations.formatters.UriPolicy._
 import org.dbpedia.extraction.destinations.formatters.SPARULFormatter
 
@@ -19,7 +19,7 @@ class SPARULDelAllDestination(subjects: HashSet[String], policies: Array[Policy]
 
   def open(): Unit = ()
 
-  def write(extractor: String, hash: String, addGraph: Seq[Quad], deleteGraph: Seq[Quad], unmodifiedGraph: Seq[Quad]) {
+  def write(extractor: String, hash: String, addGraph: Seq[Quad], deleteGraph: Seq[Quad], unmodifiedGraph: Seq[Quad], timestamp: Date) {
     for (quad <- addGraph)
       subjects.add(quad.subject);
     for (quad <- deleteGraph)

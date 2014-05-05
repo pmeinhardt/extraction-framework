@@ -1,5 +1,6 @@
 package org.dbpedia.extraction.destinations
 
+import java.util.Date
 import org.dbpedia.extraction.destinations.formatters.TerseFormatter
 import org.dbpedia.extraction.destinations.formatters.UriPolicy._
 import collection.mutable
@@ -16,20 +17,23 @@ class PublisherDiffDestination(pageID: Long, policies: Array[Policy] = null) ext
   var added = new java.util.HashSet[String]() // Set to remove duplicates
   var deleted = new java.util.HashSet[String]() // Set to remove duplicates
 
+  var time: Date = null
+
 
   def open() { }
 
-  def write(extractor: String, hash: String, graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad]) {
+  def write(extractor: String, hash: String, graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad], timestamp: Date) {
     for (quad <- graphAdd)
       added.add(formatter.render(quad))
 
     for (quad <- graphRemove)
       deleted.add(formatter.render(quad))
+
+    time = timestamp
   }
 
   def close() {
-    Main.publishingDataQueue.add(new DiffData(pageID, added,deleted))
+    Main.publishingDataQueue.add(new DiffData(pageID, time, added, deleted))
   }
-
 
 }

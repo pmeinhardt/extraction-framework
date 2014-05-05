@@ -2,7 +2,7 @@ package org.dbpedia.extraction.destinations
 
 import org.dbpedia.extraction.live.helper.{ExtractorStatus, ExtractorSpecification}
 import scala.collection.Seq
-import java.util.Map
+import java.util.{Date, Map}
 import collection.mutable.ArrayBuffer
 
 /**
@@ -16,7 +16,7 @@ class ExtractorRestrictDestination(extractorSpecs: Map[String, ExtractorSpecific
   /**
    * Writes quads to all child destinations.
    */
-  def write(extractor: String, hash: String, graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad]) {
+  def write(extractor: String, hash: String, graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad], timestamp: Date) {
 
     var added = new ArrayBuffer[Quad]()
     var deleted = new ArrayBuffer[Quad]()
@@ -34,7 +34,7 @@ class ExtractorRestrictDestination(extractorSpecs: Map[String, ExtractorSpecific
 
     }
 
-    pipe.write(extractor, hash, added, deleted ++ graphRemove, unmodified ++ graphUnmodified)
+    pipe.write(extractor, hash, added, deleted ++ graphRemove, unmodified ++ graphUnmodified, timestamp)
   }
 
   override def close = pipe.close()

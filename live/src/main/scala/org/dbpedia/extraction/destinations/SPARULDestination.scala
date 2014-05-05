@@ -1,5 +1,6 @@
 package org.dbpedia.extraction.destinations
 
+import java.util.Date
 import org.apache.log4j.Logger
 import formatters.UriPolicy._
 import org.dbpedia.extraction.destinations.formatters.SPARULFormatter
@@ -24,7 +25,7 @@ class SPARULDestination(insOrDel: Boolean, policies: Array[Policy] = null) exten
     sparql.append(formatter.header)
   }
 
-  def write(extractor: String, hash: String, addGraph: Seq[Quad], deleteGraph: Seq[Quad], unmodifiedGraph: Seq[Quad]) {
+  def write(extractor: String, hash: String, addGraph: Seq[Quad], deleteGraph: Seq[Quad], unmodifiedGraph: Seq[Quad], timestamp: Date) {
     if (insOrDel == true) {
       tripleSize += addGraph.length
       for (quad <- addGraph) {

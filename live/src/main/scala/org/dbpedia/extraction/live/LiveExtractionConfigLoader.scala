@@ -2,7 +2,7 @@ package org.dbpedia.extraction.live.extraction
 
 import java.net.URL
 import collection.immutable.ListMap
-import java.util.Properties
+import java.util.{Date, Properties}
 import java.io.File
 import org.apache.log4j.Logger
 import org.dbpedia.extraction.mappings._
@@ -166,6 +166,9 @@ object LiveExtractionConfigLoader
 
         extractorRestrictDest.open
 
+        // Get the current time
+        val timestamp = new Date()
+
         //Get triples from each extractor separately
         extractors.foreach(extractor => {
           //Try to get extractor contents, onError just return empty triples
@@ -197,7 +200,7 @@ object LiveExtractionConfigLoader
                 Seq()
               }
             }
-          extractorRestrictDest.write(extractor.getClass().getName(), "", RequiredGraph, Seq(), Seq())
+          extractorRestrictDest.write(extractor.getClass().getName(), "", RequiredGraph, Seq(), Seq(), timestamp)
         });
 
         extractorRestrictDest.close

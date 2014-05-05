@@ -1,5 +1,6 @@
 package org.dbpedia.extraction.destinations
 
+import java.util.Date
 import formatters.UriPolicy._
 import scala.collection.Seq
 
@@ -10,7 +11,7 @@ import scala.collection.Seq
 class SPARULAddAllDestination(policies: Array[Policy] = null)
   extends SPARULDestination(true, policies) {
 
-  override def write(extractor: String, hash: String, addGraph: Seq[Quad], deleteGraph: Seq[Quad], unmodifiedGraph: Seq[Quad]) {
+  override def write(extractor: String, hash: String, addGraph: Seq[Quad], deleteGraph: Seq[Quad], unmodifiedGraph: Seq[Quad], timestamp: Date) {
     tripleSize += addGraph.length + deleteGraph.length + unmodifiedGraph.length
 
     for (quad <- addGraph) {

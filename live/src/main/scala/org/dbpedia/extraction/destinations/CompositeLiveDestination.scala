@@ -1,5 +1,7 @@
 package org.dbpedia.extraction.destinations
 
+import java.util.Date
+
 /**
  * A destination that is composed of different child destinations.
  * Each statement is forwarded to all child destinations.
@@ -11,8 +13,8 @@ class CompositeLiveDestination(destinations: LiveDestination*) extends LiveDesti
 
   override def open() = destinations.foreach(_.open())
 
-  override def write(extractor: String, hash: String, graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad]) =
-    destinations.foreach(_.write(extractor, hash, graphAdd, graphRemove, graphUnmodified))
+  override def write(extractor: String, hash: String, graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad], timestamp: Date) =
+    destinations.foreach(_.write(extractor, hash, graphAdd, graphRemove, graphUnmodified, timestamp))
 
   override def close() = destinations.foreach(_.close())
 

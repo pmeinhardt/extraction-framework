@@ -6,7 +6,8 @@ import scala.util.parsing.json._
 import collection.mutable.{ListBuffer, ArrayBuffer, HashMap}
 import org.dbpedia.extraction.live.core.LiveOptions
 import org.dbpedia.extraction.destinations.formatters.UriPolicy._
-import java.util.HashSet
+import java.sql.Timestamp
+import java.util.{Date, HashSet}
 import scala.collection.JavaConversions._
 
 /**
@@ -84,7 +85,7 @@ class JSONCache(pageID: Long, pageTitle: String) {
     extractorJSON.getOrElse(extractor, "")
   }
 
-  def updateCache(json: String, subjectsSet: HashSet[String], diff: String): Boolean = {
+  def updateCache(json: String, subjectsSet: HashSet[String], diff: String, date: Date): Boolean = {
     val updatedTimes = if ( cacheObj == null || performCleanUpdate()) "0" else (cacheObj.updatedTimes + 1).toString
     
     // On clean Update do not reuse existing subjects
@@ -97,12 +98,14 @@ class JSONCache(pageID: Long, pageTitle: String) {
     if (subjectsSet.size()>0)
       subjects.deleteCharAt(subjects.length-1); //delete last comma
 
-    // Check wheather to update or insert
+    val sqlTimestamp = new Timestamp(date.getTime) // convert date
+
+    // Check whether to update or insert
     if (cacheExists) {
-      return JDBCUtil.execPrepared(DBpediaSQLQueries.getJSONCacheUpdate, Array[String](this.pageTitle, updatedTimes,  json, subjects.toString, diff,  "" + this.pageID))
+      return JDBCUtil.execPrepared(DBpediaSQLQueries.getJSONCacheUpdate, Array[Object](this.pageTitle, sqlTimestamp, updatedTimes, json, subjects.toString, diff,  "" + this.pageID))
     }
     else
-      return JDBCUtil.execPrepared(DBpediaSQLQueries.getJSONCacheInsert, Array[String]("" + this.pageID, this.pageTitle, updatedTimes,  json, subjects.toString, diff))
+      return JDBCUtil.execPrepared(DBpediaSQLQueries.getJSONCacheInsert, Array[Object]("" + this.pageID, this.pageTitle, sqlTimestamp, updatedTimes,  json, subjects.toString, diff))
   }
 
   private def initCache {
@@ -139,7 +142,7 @@ class JSONCache(pageID: Long, pageTitle: String) {
 
 object JSONCache {
   def setErrorOnCache(pageID: Long, error: Int) {
-    JDBCUtil.execPrepared(DBpediaSQLQueries.getJSONCacheUpdateError, Array[String]("" + error, "" + pageID))
+    JDBCUtil.execPrepared(DBpediaSQLQueries.getJSONCacheUpdateError, Array[Object]("" + error, "" + pageID))
   }
 
   def deleteCacheItem(pageID: Long, policies: Array[Policy] = null) {
@@ -153,14 +156,14 @@ object JSONCache {
 
 
     compositeDest.open
-    compositeDest.write("dummy extractor","dummy hash", Seq(), triples, Seq())
+    compositeDest.write("dummy extractor","dummy hash", Seq(), triples, Seq(), new Date())
     compositeDest.close
 
     deleteCacheOnlyItem(pageID)
   }
 
   def deleteCacheOnlyItem(pageID: Long) {
-    JDBCUtil.execPrepared(DBpediaSQLQueries.getJSONCacheDelete, Array[String]("" + pageID))
+    JDBCUtil.execPrepared(DBpediaSQLQueries.getJSONCacheDelete, Array[Object]("" + pageID))
   }
 }
 
