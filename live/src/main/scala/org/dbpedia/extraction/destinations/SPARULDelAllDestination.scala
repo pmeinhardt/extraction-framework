@@ -19,7 +19,7 @@ class SPARULDelAllDestination(subjects: HashSet[String], policies: Array[Policy]
 
   def open(): Unit = ()
 
-  def write(extractor: String, hash: String, addGraph: Seq[Quad], deleteGraph: Seq[Quad], unmodifiedGraph: Seq[Quad], timestamp: Date) {
+  def write(extractor: String, hash: String, addGraph: Seq[Quad], deleteGraph: Seq[Quad], unmodifiedGraph: Seq[Quad], timestamp: Long) {
     for (quad <- addGraph)
       subjects.add(quad.subject);
     for (quad <- deleteGraph)

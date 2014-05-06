@@ -167,7 +167,7 @@ object LiveExtractionConfigLoader
         extractorRestrictDest.open
 
         // Get the current time
-        val timestamp = new Date()
+        val timestamp = wikiPage.timestamp
 
         //Get triples from each extractor separately
         extractors.foreach(extractor => {

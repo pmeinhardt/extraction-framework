@@ -16,7 +16,7 @@ class ExtractorRestrictDestination(extractorSpecs: Map[String, ExtractorSpecific
   /**
    * Writes quads to all child destinations.
    */
-  def write(extractor: String, hash: String, graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad], timestamp: Date) {
+  def write(extractor: String, hash: String, graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad], timestamp: Long) {
 
     var added = new ArrayBuffer[Quad]()
     var deleted = new ArrayBuffer[Quad]()

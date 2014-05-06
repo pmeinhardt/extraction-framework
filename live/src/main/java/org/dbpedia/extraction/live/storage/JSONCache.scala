@@ -85,7 +85,7 @@ class JSONCache(pageID: Long, pageTitle: String) {
     extractorJSON.getOrElse(extractor, "")
   }
 
-  def updateCache(json: String, subjectsSet: HashSet[String], diff: String, date: Date): Boolean = {
+  def updateCache(json: String, subjectsSet: HashSet[String], diff: String, timestamp: Long): Boolean = {
     val updatedTimes = if ( cacheObj == null || performCleanUpdate()) "0" else (cacheObj.updatedTimes + 1).toString
     
     // On clean Update do not reuse existing subjects
@@ -98,7 +98,7 @@ class JSONCache(pageID: Long, pageTitle: String) {
     if (subjectsSet.size()>0)
       subjects.deleteCharAt(subjects.length-1); //delete last comma
 
-    val sqlTimestamp = new Timestamp(date.getTime) // convert date
+    val sqlTimestamp = new Timestamp(timestamp) // convert timestamp value
 
     // Check whether to update or insert
     if (cacheExists) {
@@ -156,7 +156,7 @@ object JSONCache {
 
 
     compositeDest.open
-    compositeDest.write("dummy extractor","dummy hash", Seq(), triples, Seq(), new Date())
+    compositeDest.write("dummy extractor","dummy hash", Seq(), triples, Seq(), System.currentTimeMillis())
     compositeDest.close
 
     deleteCacheOnlyItem(pageID)

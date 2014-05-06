@@ -25,7 +25,7 @@ class SPARULDestination(insOrDel: Boolean, policies: Array[Policy] = null) exten
     sparql.append(formatter.header)
   }
 
-  def write(extractor: String, hash: String, addGraph: Seq[Quad], deleteGraph: Seq[Quad], unmodifiedGraph: Seq[Quad], timestamp: Date) {
+  def write(extractor: String, hash: String, addGraph: Seq[Quad], deleteGraph: Seq[Quad], unmodifiedGraph: Seq[Quad], timestamp: Long) {
     if (insOrDel == true) {
       tripleSize += addGraph.length
       for (quad <- addGraph) {

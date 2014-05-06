@@ -11,7 +11,7 @@ import scala.collection.Seq
 class SPARULAddAllDestination(policies: Array[Policy] = null)
   extends SPARULDestination(true, policies) {
 
-  override def write(extractor: String, hash: String, addGraph: Seq[Quad], deleteGraph: Seq[Quad], unmodifiedGraph: Seq[Quad], timestamp: Date) {
+  override def write(extractor: String, hash: String, addGraph: Seq[Quad], deleteGraph: Seq[Quad], unmodifiedGraph: Seq[Quad], timestamp: Long) {
     tripleSize += addGraph.length + deleteGraph.length + unmodifiedGraph.length
 
     for (quad <- addGraph) {

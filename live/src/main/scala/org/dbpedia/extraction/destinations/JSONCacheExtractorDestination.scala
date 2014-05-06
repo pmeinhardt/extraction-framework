@@ -17,7 +17,7 @@ class JSONCacheExtractorDestination(cache: JSONCache, pipe: LiveDestination) ext
 
   override def open = pipe.open()
 
-  override def write(extractor: String, hash: String, graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad], timestamp: Date) {
+  override def write(extractor: String, hash: String, graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad], timestamp: Long) {
 
     val sb = new java.lang.StringBuilder
     val quads = Sorting.stableSort(graphAdd ++ graphUnmodified)

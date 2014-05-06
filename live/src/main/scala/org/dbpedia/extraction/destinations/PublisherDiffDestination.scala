@@ -17,12 +17,12 @@ class PublisherDiffDestination(pageID: Long, policies: Array[Policy] = null) ext
   var added = new java.util.HashSet[String]() // Set to remove duplicates
   var deleted = new java.util.HashSet[String]() // Set to remove duplicates
 
-  var time: Date = null
+  var time: Long = 0
 
 
   def open() { }
 
-  def write(extractor: String, hash: String, graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad], timestamp: Date) {
+  def write(extractor: String, hash: String, graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad], timestamp: Long) {
     for (quad <- graphAdd)
       added.add(formatter.render(quad))
 
