@@ -23,6 +23,7 @@ public class Publisher extends Thread{
 
     private static final Logger logger = LoggerFactory.getLogger(Publisher.class);
 
+    private long timestamp;
     private HashSet<String> addedTriples = new HashSet<String>();
     private HashSet<String> deletedTriples = new HashSet<String>();
 
@@ -53,13 +54,18 @@ public class Publisher extends Thread{
                 // Block until next pubData
                 DiffData pubData = Main.publishingDataQueue.take();
 
-                if (pageCache.contains(pubData.pageID) || counter % 300 == 0) {
-                    flush();
-                    counter = 0;
-                }
+                // if (pageCache.contains(pubData.pageID) || counter % 300 == 0) {
+                //     flush();
+                //     counter = 0;
+                // }
+                // bufferDiff(pubData);
+                // counter++;
+                // pageCache.add(pubData.pageID);
+
+                // For now, just flush after every diff item…
+                // TODO: Find a way to optimize/batch disk writes while still being able to identify resource changes at any given point in time
                 bufferDiff(pubData);
-                counter++;
-                pageCache.add(pubData.pageID);
+                flush();
             } catch(Throwable t) {
                 logger.error("An exception was encountered in the Publisher update loop", t);
             }
@@ -71,6 +77,7 @@ public class Publisher extends Thread{
         if(pubData != null){
             addedTriples.addAll(pubData.toAdd);
             deletedTriples.addAll(pubData.toDelete);
+            timestamp = pubData.timestamp;
         }
     }
 
@@ -79,7 +86,8 @@ public class Publisher extends Thread{
 
         pageCache.clear();
         counter = 1;
-        String fileName = publishDiffBaseName + "/" + PublisherService.getNextPublishPath();
+        // String fileName = publishDiffBaseName + "/" + PublisherService.getNextPublishPath();
+        String fileName = publishDiffBaseName + "/" + PublisherService.getPublishPath(timestamp);
         File parent = new File(fileName).getParentFile();
 
         if(parent != null)
