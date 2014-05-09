@@ -23,7 +23,7 @@ class TimeMachine {
 
     // Roll back any relevant changesets
     for (ts <- timeline) {
-      val changeset = Changeset.load(ts)
+      val changeset = Changeset.load(pageID, ts)
       triples --= changeset.added
       triples ++= changeset.removed
     }
