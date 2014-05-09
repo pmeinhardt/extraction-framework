@@ -1,6 +1,5 @@
 package org.dbpedia.extraction.destinations
 
-import java.util.Date
 import org.dbpedia.extraction.destinations.formatters.TerseFormatter
 import org.dbpedia.extraction.destinations.formatters.UriPolicy._
 import collection.mutable

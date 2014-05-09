@@ -5,7 +5,7 @@ import org.dbpedia.extraction.live.storage.JDBCUtil
 import scala.collection.JavaConversions._
 import scala.collection.Seq
 import org.apache.log4j.Logger
-import java.util.{Date, HashSet}
+import java.util.HashSet
 import org.dbpedia.extraction.destinations.formatters.UriPolicy._
 import org.dbpedia.extraction.destinations.formatters.SPARULFormatter
 

@@ -1,6 +1,5 @@
 package org.dbpedia.extraction.destinations
 
-import java.util.Date
 import org.apache.log4j.Logger
 import formatters.UriPolicy._
 import org.dbpedia.extraction.destinations.formatters.SPARULFormatter

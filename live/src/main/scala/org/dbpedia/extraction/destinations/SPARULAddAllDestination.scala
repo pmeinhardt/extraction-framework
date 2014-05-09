@@ -1,6 +1,5 @@
 package org.dbpedia.extraction.destinations
 
-import java.util.Date
 import formatters.UriPolicy._
 import scala.collection.Seq
 

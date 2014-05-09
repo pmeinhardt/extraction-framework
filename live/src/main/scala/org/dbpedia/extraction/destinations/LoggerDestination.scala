@@ -1,6 +1,5 @@
 package org.dbpedia.extraction.destinations
 
-import java.util.Date
 import scala.collection.Seq
 import org.apache.log4j.Logger
 

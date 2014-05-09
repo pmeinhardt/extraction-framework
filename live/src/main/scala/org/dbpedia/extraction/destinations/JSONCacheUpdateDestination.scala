@@ -6,7 +6,7 @@ import util.Sorting
 import collection.mutable.ArrayBuffer
 import org.apache.log4j.Logger
 import org.dbpedia.extraction.live.storage.JSONCache
-import java.util.{Date, HashSet}
+import java.util.HashSet
 
 
 /*

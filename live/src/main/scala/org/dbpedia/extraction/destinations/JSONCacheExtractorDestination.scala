@@ -1,6 +1,5 @@
 package org.dbpedia.extraction.destinations
 
-import java.util.Date
 import org.dbpedia.extraction.destinations.formatters.RDFJSONFormatter
 import scala.collection.Seq
 import util.Sorting

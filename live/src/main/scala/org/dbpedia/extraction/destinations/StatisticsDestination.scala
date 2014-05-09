@@ -1,7 +1,5 @@
 package org.dbpedia.extraction.destinations
 
-import java.util.Date
-
 /**
  * Writes extraction results to statistics
  */

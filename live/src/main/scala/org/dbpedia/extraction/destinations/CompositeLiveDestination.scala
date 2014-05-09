@@ -1,7 +1,5 @@
 package org.dbpedia.extraction.destinations
 
-import java.util.Date
-
 /**
  * A destination that is composed of different child destinations.
  * Each statement is forwarded to all child destinations.
