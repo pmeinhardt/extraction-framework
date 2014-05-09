@@ -48,7 +48,7 @@ class TimeMachine {
    *
    * @param pageID page id for the resource to trace
    * @param timestamp point in time to go back to
-   * @return iterator for timestamps of all resource modification times
+   * @return iterator for timestamps of resource modification times in reverse order
    */
   def trace(pageID: Long, timestamp: Long): Iterator[Long] = {
     val history = new RevisionHistory(pageID)

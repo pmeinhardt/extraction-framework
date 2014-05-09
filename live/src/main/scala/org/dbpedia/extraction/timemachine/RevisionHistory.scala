@@ -8,7 +8,7 @@ import java.sql.{SQLException, Connection, Date}
  * Uses the live cache db to retrieve modification data for a given resource.
  *
  * Note: In order to use this feature, you will need to install the change
- * tracking by loading `changetracking.sql` into your database system.
+ * tracking by loading 'changetracking.sql' into your database system.
  *
  * @param pageID page id for the resource
  */
