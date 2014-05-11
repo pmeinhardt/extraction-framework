@@ -59,6 +59,6 @@ object ChangesetPathProvider {
     val day   = cal.get(Calendar.DAY_OF_MONTH)
     val hour  = cal.get(Calendar.HOUR_OF_DAY)
 
-    String.format("%s/%04d/%02d/%02d/%02d/%020d-%20d", basedir, year, month, day, hour, timestamp, pageID)
+    "%s/%04d/%02d/%02d/%02d/%020d-%20d".format(basedir, year, month, day, hour, timestamp, pageID)
   }
 }
