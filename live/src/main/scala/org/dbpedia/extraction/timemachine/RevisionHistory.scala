@@ -8,36 +8,36 @@ import java.sql.{SQLException, Connection, Date}
  * Uses the live cache db to retrieve modification data for a given resource.
  *
  * Note: In order to use this feature, you will need to install the change
- * tracking by loading 'changetracking.sql' into your database system.
+ * tracking by loading 'revisions.sql' into your database system.
  *
  * @param pageID page id for the resource
  */
 class RevisionHistory(var pageID: Long) {
   val logger: Logger = Logger.getLogger(classOf[RevisionHistory])
 
-  def rewind(timestamp: Long): Iterator[Long] = {
+  def rewind(timestamp: Long): Iterator[Revision] = {
     var connection: Connection = null
     try {
       connection = JDBCPoolConnection.getCachePoolConnection
 
-      val statement = connection.prepareStatement("SELECT * FROM DBPEDIALIVE_UPDATES WHERE pageID = ? AND timestamp > ? ORDER BY timestamp DESC")
+      val statement = connection.prepareStatement("SELECT * FROM DBPEDIALIVE_REVISIONS WHERE pageID = ? AND timestamp > ? ORDER BY timestamp DESC")
       statement.setLong(1, pageID)
       statement.setDate(2, new Date(timestamp))
 
       val result = statement.executeQuery()
 
-      new Iterator[Long] {
+      new Iterator[Revision] {
         def hasNext: Boolean = result.next
-        def next(): Long = {
-          val date = result.getDate("timestamp")
-          date.getTime
+        def next(): Revision = {
+          val additions = result.getString("additions")
+          val deletions = result.getString("deletions")
+          new Revision(additions, deletions)
         }
       }
     } catch {
-      case e: SQLException => {
+      case e: SQLException =>
         logger.warn(e.getMessage)
         null
-      }
     } finally {
       if (connection != null) connection.close()
     }
