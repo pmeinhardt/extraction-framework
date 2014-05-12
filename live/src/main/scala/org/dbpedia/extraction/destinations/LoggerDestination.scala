@@ -13,9 +13,8 @@ class LoggerDestination(pageID: Long, pageTitle: String) extends LiveDestination
   private var addedTriples = 0
   private var deletedTriples = 0
   private var unmodifiedTriples = 0
-  private var extractors = 0;
-  private var now = System.currentTimeMillis
-  private var time: Long = 0
+  private var extractors = 0
+  private val now = System.currentTimeMillis
 
   /**
    * Opens this destination. This method should only be called once during the lifetime
@@ -28,13 +27,12 @@ class LoggerDestination(pageID: Long, pageTitle: String) extends LiveDestination
     addedTriples += graphAdd.length
     deletedTriples += graphRemove.length
     unmodifiedTriples += graphUnmodified.length
-    time = timestamp
   }
 
   override def close = {
     val total = addedTriples + unmodifiedTriples
     logger.info("Page with ID:" + pageID + " produced " + total +
       " Triples (A:" + addedTriples + "/D:" + deletedTriples + "/U:" + unmodifiedTriples +
-      ") in " + (time - now) + "ms. (Title: " + pageTitle + ")")
+      ") in " + (System.currentTimeMillis - now) + "ms. (Title: " + pageTitle + ")")
   }
 }

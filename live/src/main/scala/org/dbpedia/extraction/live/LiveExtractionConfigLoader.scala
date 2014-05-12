@@ -2,7 +2,7 @@ package org.dbpedia.extraction.live.extraction
 
 import java.net.URL
 import collection.immutable.ListMap
-import java.util.{Date, Properties}
+import java.util.Properties
 import java.io.File
 import org.apache.log4j.Logger
 import org.dbpedia.extraction.mappings._
