@@ -8,15 +8,13 @@ import java.util.HashSet;
 public class DiffData {
 
     public long pageID = 0;
-    public long timestamp = 0;
     public HashSet<String> toAdd = null;
     public HashSet<String> toDelete = null;
 
-    public DiffData(long id, long timestamp, HashSet<String> add, HashSet<String> delete) {
-        this.pageID = id;
-        this.timestamp = timestamp;
-        this.toAdd = new HashSet<String>(add);
-        this.toDelete = new HashSet<String>(delete);
+    public DiffData(long id, HashSet<String> add, HashSet<String> delete){
+        pageID = id;
+        toAdd = new HashSet<String>(add);
+        toDelete = new HashSet<String>(delete);
     }
 }
 

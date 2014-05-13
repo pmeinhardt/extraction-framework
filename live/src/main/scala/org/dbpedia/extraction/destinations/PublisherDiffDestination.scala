@@ -16,23 +16,20 @@ class PublisherDiffDestination(pageID: Long, policies: Array[Policy] = null) ext
   var added = new java.util.HashSet[String]() // Set to remove duplicates
   var deleted = new java.util.HashSet[String]() // Set to remove duplicates
 
-  var time: Long = 0
-
 
   def open() { }
 
-  def write(extractor: String, hash: String, graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad], timestamp: Long) {
+  def write(extractor: String, hash: String, graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad]) {
     for (quad <- graphAdd)
       added.add(formatter.render(quad))
 
     for (quad <- graphRemove)
       deleted.add(formatter.render(quad))
-
-    time = timestamp
   }
 
   def close() {
-    Main.publishingDataQueue.add(new DiffData(pageID, time, added, deleted))
+    Main.publishingDataQueue.add(new DiffData(pageID, added,deleted))
   }
+
 
 }

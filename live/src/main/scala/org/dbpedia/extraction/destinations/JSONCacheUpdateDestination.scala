@@ -15,24 +15,23 @@ import java.util.HashSet
 class JSONCacheUpdateDestination(cache: JSONCache) extends LiveDestination {
   private val logger = Logger.getLogger(classOf[JSONCacheUpdateDestination].getName)
 
+
   var extractors = new ArrayBuffer[String](20)
   var hashes = new ArrayBuffer[String](20)
   val formatter: RDFJSONFormatter = new RDFJSONFormatter
   val subjects = new HashSet[String]
 
-  var time: Long = 0
+  def open {
+  }
 
-  def open {}
+  def write(extractor: String, hash: String, graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad]) {
 
-  def write(extractor: String, hash: String, graphAdd: Seq[Quad], graphRemove: Seq[Quad], graphUnmodified: Seq[Quad], timestamp: Long) {
     hashes += hash
     extractors += extractor
-
     for (quad <- graphAdd) subjects.add(quad.subject);
     for (quad <- graphRemove) subjects.add(quad.subject);
     for (quad <- graphUnmodified) subjects.add(quad.subject);
 
-    time = timestamp
   }
 
   def close {
@@ -49,7 +48,8 @@ class JSONCacheUpdateDestination(cache: JSONCache) extends LiveDestination {
     if (sb.length > 2)
       sb.setCharAt(sb.lastIndexOf(","), ' ')
 
-    val success = cache.updateCache(sb.toString, subjects, "", time) //TODO add subjects / diffs
+
+    val success = cache.updateCache(sb.toString, subjects, "") //TODO add subjects / diffs
     // TODO better logging
     if (!success) logger.info( "Updating JSON Cache failed")
 

@@ -18,4 +18,4 @@ CREATE TABLE IF NOT EXISTS `DBPEDIALIVE_REVISIONS` (
 
 -- Add an index on the DBPEDIALIVE_REVISIONS `pageID` column
 
-CREATE INDEX `updates_page_id_index` ON `DBPEDIALIVE_REVISIONS` (`pageID`);
+CREATE INDEX `revisions_page_id_index` ON `DBPEDIALIVE_REVISIONS` (`pageID`);

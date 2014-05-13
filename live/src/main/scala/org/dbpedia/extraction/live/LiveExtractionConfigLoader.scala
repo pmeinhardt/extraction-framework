@@ -166,7 +166,7 @@ object LiveExtractionConfigLoader
 
         extractorRestrictDest.open
 
-        // Get the current time
+        // Get the wiki page modification timestamp
         val timestamp = wikiPage.timestamp
 
         //Get triples from each extractor separately

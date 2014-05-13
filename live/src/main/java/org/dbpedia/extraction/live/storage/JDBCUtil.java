@@ -117,7 +117,7 @@ public class JDBCUtil {
     /*
     * Execs a prepared Statement SQL query and returns true if everything went ok or false  in case of exception
     * */
-    public static boolean execPrepared(String preparedQuery, Object[] parameterList) {
+    public static boolean execPrepared(String preparedQuery, String[] parameterList) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet result = null;
@@ -126,7 +126,7 @@ public class JDBCUtil {
             stmt = conn.prepareStatement(preparedQuery);
 
             for (int i = 0; i < parameterList.length; i++) {
-                stmt.setObject(i + 1, parameterList[i]);
+                stmt.setString(i + 1, parameterList[i]);
             }
             stmt.execute();
 
