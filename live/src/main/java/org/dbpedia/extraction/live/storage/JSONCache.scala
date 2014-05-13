@@ -153,7 +153,7 @@ object JSONCache {
 
 
     compositeDest.open
-    compositeDest.write("dummy extractor","dummy hash", Seq(), triples, Seq())
+    compositeDest.write("dummy extractor","dummy hash", Seq(), triples, Seq(), System.currentTimeMillis)
     compositeDest.close
 
     deleteCacheOnlyItem(pageID)

@@ -29,9 +29,9 @@ class RevisionHistory(var pageID: Long) {
       new Iterator[Revision] {
         def hasNext: Boolean = result.next
         def next(): Revision = {
-          val additions = result.getString("additions")
-          val deletions = result.getString("deletions")
-          new Revision(additions, deletions)
+          val additionsStr = result.getString("additions")
+          val deletionsStr = result.getString("deletions")
+          Revision.from(additionsStr, deletionsStr)
         }
       }
     } catch {
