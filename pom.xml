@@ -25,6 +25,7 @@
         <module>scripts</module>
         <module>live</module>
         <module>wiktionary</module>
+        <module>memento</module>
     </modules>
 
     <build>
