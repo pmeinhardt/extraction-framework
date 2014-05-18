@@ -1,11 +1,11 @@
 package org.dbpedia.extraction.destinations
 
 import java.sql.{SQLException, Date, Connection}
+import org.apache.log4j.Logger
 import org.dbpedia.extraction.destinations.formatters.UriPolicy._
 import org.dbpedia.extraction.destinations.formatters.TerseFormatter
 import org.dbpedia.extraction.live.storage.JDBCPoolConnection
 import scala.collection.mutable
-import org.apache.log4j.Logger
 
 /**
  * Writes resource revisions into separate database table.

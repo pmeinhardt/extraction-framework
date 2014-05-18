@@ -10,10 +10,12 @@ class TimeMachine {
    *
    * @param pageID page id of the resource to fetch and trace back
    * @param timestamp roll back the resource to this point in time
-   * @return set of all quads for the resource at the given time
+   * @return set of all quads for the resource at the given time and
+   *         the actual creation time of the retrieved version state
    */
-  def retrieve(pageID: Long, timestamp: Long): Set[Quad] = {
+  def retrieve(pageID: Long, timestamp: Long): (Set[Quad], Long) = {
     var quads = new mutable.HashSet[Quad]
+    var t: Long = 0
 
     // Fetch current json-cache item and resource triples
     quads ++= current(pageID)
@@ -25,9 +27,10 @@ class TimeMachine {
     for (revision <- timeline) {
       quads --= revision.additions
       quads ++= revision.deletions
+      t = revision.timestamp
     }
 
-    quads.toSet
+    (quads.toSet, t)
   }
 
   /**
@@ -50,6 +53,6 @@ class TimeMachine {
    */
   def trace(pageID: Long, timestamp: Long): Iterator[Revision] = {
     val history = new RevisionHistory(pageID)
-    history.rewind(timestamp)
+    history.revisions(timestamp)
   }
 }
