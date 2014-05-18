@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>DBpedia Memento</title>
+
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css">
+        <link rel="stylesheet" href="stylesheets/app.css">
+    </head>
+    <body>
+        <article class="wrapper">
+            <header>
+                <h1>DBpedia Memento Explorer</h1>
+
+                <div id="search">
+                    <form id="search-form">
+                        <p>Look at timelines for DBpedia resources by searching for an ID</p>
+
+                        <!--
+                            TODO: Auto-completion
+
+                            Implement resource finding route in ExplorerServlet:
+                            GET /explorer/resource?name=Berlin
+
+                            Add a "resource-name" search field, submit it to above route.
+                            Set a "resource-id" hidden field with the selected ID.
+
+                            <input name="resource-name" type="search" placeholder="Resource name" autofocus="true">
+                            <input name="resource-id" type="hidden" value="">
+                        -->
+                        <input name="resource-id" type="search" placeholder="Resource ID" autofocus="true">
+                        <input type="submit" value="Load">
+                    </form>
+                </div>
+            </header>
+
+            <section id="timeline"></section>
+
+            <footer>
+                <p><small>Design adapted from Peiwen Lu, <a href="http://codepen.io/P233/pen/lGewF">http://codepen.io/P233/pen/lGewF</a></small></p>
+            </footer>
+        </article>
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.10.0/react.js"></script>
+        <script src="javascripts/app.js"></script>
+    </body>
+</html>

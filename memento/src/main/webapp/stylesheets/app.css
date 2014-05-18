@@ -1,0 +1,73 @@
+@import url(http://fonts.googleapis.com/css?family=Noto+Sans);
+
+body {
+    font-family: "Noto Sans", sans-serif;
+    background: #48b379;
+    color: #fff;
+}
+
+a {
+    color: #eee9dc;
+    text-decoration: none;
+}
+
+a:focus,
+a:hover {
+    text-decoration: underline;
+}
+
+input {
+    color: #222;
+}
+
+.wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+ul.timeline {
+    list-style: none;
+    margin: 50px 0 30px 120px;
+    padding-left: 30px;
+    border-left: 8px solid #fff;
+}
+ul.timeline li {
+    margin: 40px 0;
+    position: relative;
+}
+
+.date {
+    position: absolute;
+    top: 50%;
+    left: -158px;
+    margin-top: -10px;
+    font-size: 0.95em;
+    line-height: 20px;
+}
+
+.circle {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: -44px;
+    width: 10px;
+    height: 10px;
+    margin-top: -10px;
+    background: #48b379;
+    border: 5px solid #fff;
+    border-radius: 50%;
+}
+
+.content {
+    max-height: 20px;
+    padding: 24px 50px;
+    position: relative;
+    border: 0;
+}
+
+.revision-label {
+    font-size: 1.3em;
+    position: absolute;
+    color: #fff;
+}

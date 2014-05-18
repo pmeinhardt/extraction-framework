@@ -1,6 +1,5 @@
 import org.eclipse.jetty.server.Server
 import org.eclipse.jetty.webapp.WebAppContext
-import org.scalatra.servlet.ScalatraListener
 
 object DevelopmentServer {
   def main(args: Array[String]) {
@@ -14,10 +13,9 @@ object DevelopmentServer {
       server.start()
       server.join()
     } catch {
-      case e: Exception => {
+      case e: Exception =>
         e.printStackTrace()
-        System.exit(1)
-      }
+      System.exit(1)
     }
   }
 }
