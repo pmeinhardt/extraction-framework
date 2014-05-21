@@ -14,6 +14,9 @@ import org.dbpedia.extraction.live.storage.JDBCPoolConnection
  * tracking by loading 'revisions.sql' into your database system and enable
  * the 'RevisionDestination'.
  *
+ * Implementation note: Revision 'id' is an auto-incremented integer value.
+ * Therefore 'ORDER BY id DESC' returns the revisions in reverse, total order.
+ *
  * @param pageID page id for the resource
  */
 class RevisionHistory(var pageID: Long) {
@@ -26,7 +29,7 @@ class RevisionHistory(var pageID: Long) {
    * @return iterator for revisions of the resource in reverse order
    */
   def revisions(timestamp: Long): Iterator[Revision] = {
-    val q = "SELECT * FROM DBPEDIALIVE_REVISIONS WHERE pageID = ? AND timestamp > ? ORDER BY timestamp DESC"
+    val q = "SELECT * FROM DBPEDIALIVE_REVISIONS WHERE pageID = ? AND timestamp > ? ORDER BY id DESC"
     load(q, timestamp, (result) => {
       new Iterator[Revision] {
         def hasNext: Boolean = result.next
@@ -47,7 +50,7 @@ class RevisionHistory(var pageID: Long) {
    * @return iterator for modification timestamps of the resource in reverse order
    */
   def timestamps(timestamp: Long): Iterator[Long] = {
-    val q = "SELECT timestamp FROM DBPEDIALIVE_REVISIONS WHERE pageID = ? AND timestamp > ? ORDER BY timestamp DESC"
+    val q = "SELECT timestamp FROM DBPEDIALIVE_REVISIONS WHERE pageID = ? AND timestamp > ? ORDER BY id DESC"
     load(q, timestamp, (result) => {
       new Iterator[Long] {
         def hasNext: Boolean = result.next
