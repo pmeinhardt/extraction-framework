@@ -1,0 +1,28 @@
+{
+  "types": [
+
+  ],
+  "project_page": "http://github.com/Spantree/puppet-java7",
+  "author": "Spantree",
+  "dependencies": [
+    {
+      "version_requirement": ">= 1.0.1",
+      "name": "puppetlabs/apt"
+    }
+  ],
+  "source": "git://github.com/Spantree/puppet-java7.git",
+  "summary": "Oracle Java7 Puppet Module",
+  "description": "This module manages Oracle Java7. Tested on Ubuntu",
+  "license": "",
+  "checksums": {
+    "Puppetfile": "a475e6b5d25c4584c10e419515087dab",
+    "files/set_java_home.sh": "c12952228fbab17b18fc4207b1f593bb",
+    "files/java.preseed": "4f7ef454a73ea3f105f61e45176da36b",
+    "Modulefile": "ce99c77cad6937588d06f435f461b1ac",
+    "CHANGELOG": "faf88704b682fece9012e847f07ecf9f",
+    "manifests/init.pp": "ccb477ba630d17e6eaf6f9002fce8a6f",
+    "README.md": "fd867fc0b96f555c560f264a7887e205"
+  },
+  "version": "0.2.2",
+  "name": "spantree-java7"
+}
