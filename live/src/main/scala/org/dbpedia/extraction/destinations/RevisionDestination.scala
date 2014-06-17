@@ -1,6 +1,6 @@
 package org.dbpedia.extraction.destinations
 
-import java.sql.{SQLException, Date, Connection}
+import java.sql.{SQLException, Timestamp, Connection}
 import org.apache.log4j.Logger
 import org.dbpedia.extraction.destinations.formatters.UriPolicy._
 import org.dbpedia.extraction.destinations.formatters.TerseFormatter
@@ -52,11 +52,11 @@ class RevisionDestination(pageID: Long, policies: Array[Policy] = null) extends 
       val statement = connection.prepareStatement("INSERT INTO DBPEDIALIVE_REVISIONS (pageID, timestamp, additions, deletions) VALUES (?, ?, ?, ?)")
 
       statement.setLong(1, pageID)
-      statement.setDate(2, new Date(time))
+      statement.setTimestamp(2, new Timestamp(time))
       statement.setString(3, addStr.toString())
       statement.setString(4, delStr.toString())
 
-      statement.executeQuery()
+      statement.executeUpdate()
     } catch {
       case e: SQLException => logger.warn(e.getMessage)
     } finally {

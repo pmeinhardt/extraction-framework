@@ -176,6 +176,9 @@ object LiveExtractionConfigLoader
         // Get the wiki page modification timestamp
         val timestamp = wikiPage.timestamp
 
+        // Alternatively, for a synchronized extraction timestamp use:
+        // val timestamp = System.currentTimeMillis()
+
         //Get triples from each extractor separately
         extractors.foreach(extractor => {
           //Try to get extractor contents, onError just return empty triples
