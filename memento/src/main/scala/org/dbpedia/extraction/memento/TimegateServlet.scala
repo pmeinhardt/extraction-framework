@@ -137,7 +137,7 @@ class TimegateServlet extends ScalatraServlet {
   }
 
   def shortfmt: SimpleDateFormat = {
-    val fmt = new SimpleDateFormat("yyyymmddHHmmss")
+    val fmt = new SimpleDateFormat("yyyyMMddHHmmss")
     fmt.setTimeZone(timezone)
     fmt
   }
