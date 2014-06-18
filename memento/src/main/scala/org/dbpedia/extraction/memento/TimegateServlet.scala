@@ -83,8 +83,7 @@ class TimegateServlet extends ScalatraServlet {
     res.append("<%s>; rel=\"self\"; type=\"application/link-format\",\n".format(url))
     res.append("<%s://%s%s/pages/%d>; rel=\"original\"".format(scheme, host, base, id))
 
-    // val timestamps = history.timestamps(0)
-    val timestamps = List[Long](100000, 60000, 200, 0)
+    val timestamps = history.timestamps(0)
 
     val URLFmt = shortfmt
     val lnkFmt = datefmt
