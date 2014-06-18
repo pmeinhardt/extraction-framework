@@ -1,6 +1,6 @@
 package org.dbpedia.extraction.timemachine
 
-import java.sql.{Connection, Date, ResultSet, SQLException}
+import java.sql.{Connection, Timestamp, ResultSet, SQLException}
 import org.apache.log4j.Logger
 import org.dbpedia.extraction.live.storage.JDBCPoolConnection
 
@@ -34,7 +34,7 @@ class RevisionHistory(var pageID: Long) {
       new Iterator[Revision] {
         def hasNext: Boolean = result.next
         def next(): Revision = {
-          val modifiedDate = result.getDate("timestamp")
+          val modifiedDate = result.getTimestamp("timestamp")
           val additionsStr = result.getString("additions")
           val deletionsStr = result.getString("deletions")
           Revision.from(modifiedDate.getTime, additionsStr, deletionsStr)
@@ -55,7 +55,7 @@ class RevisionHistory(var pageID: Long) {
       new Iterator[Long] {
         def hasNext: Boolean = result.next
         def next(): Long = {
-          val modificationDate = result.getDate("timestamp")
+          val modificationDate = result.getTimestamp("timestamp")
           modificationDate.getTime
         }
       }
@@ -69,7 +69,7 @@ class RevisionHistory(var pageID: Long) {
 
       val statement = connection.prepareStatement(query)
       statement.setLong(1, pageID)
-      statement.setDate(2, new Date(timestamp))
+      statement.setTimestamp(2, new Timestamp(timestamp))
 
       val results = statement.executeQuery()
 
