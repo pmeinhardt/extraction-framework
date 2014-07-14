@@ -54,7 +54,7 @@ class JSONCache(pageID: Long, pageTitle: String) {
           for (obj <- objLsit) {
                 val objValue: String = obj.getOrElse("value","")
                 val objType: String = obj.getOrElse("type","")
-                val objLang: String = obj.getOrElse("lang", LiveOptions.options.get("language"))
+                val objLang: String = obj.getOrElse("lang", null)
                 val objDatatype: String = obj.getOrElse("datatype", "http://www.w3.org/2001/XMLSchema#string")
 
                 val finalDatatype = if (objType.equals("uri")) null else objDatatype // null datatype if uri
